@@ -1,60 +1,332 @@
-<script>
-const prankFile = `<!DOCTYPE html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>GET TROLLED</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>You Are An Idiot</title>
+
 <style>
-body {
-  margin:0;
-  height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  flex-direction:column;
-  text-align:center;
-  font-family:Arial,sans-serif;
+* {
+  box-sizing: border-box;
 }
-h1 {font-size:55px}
-p {font-size:24px}
+
+html, body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: white;
+  color: black;
+}
+
+#main {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: white;
+}
+
+#title {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(30px, 6vw, 70px);
+  margin-bottom: 15px;
+}
+
+.faces {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: clamp(12px, 3vw, 25px);
+}
+
+.faces svg {
+  width: clamp(55px, 12vw, 95px);
+  height: auto;
+}
+
+#downloads {
+  position: fixed;
+  bottom: 10px;
+  left: 10px;
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+}
+
+.download {
+  background: #eee;
+  border: 1px solid #aaa;
+  padding: 6px 10px;
+  margin-top: 4px;
+}
+
+#reveal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: white;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+#reveal h1 {
+  font-size: clamp(35px, 8vw, 85px);
+  margin: 15px;
+}
+
+#reveal p {
+  font-size: clamp(17px, 3vw, 28px);
+}
 </style>
 </head>
+
 <body>
+
+<!-- MAIN YAIA SCREEN -->
+<div id="main">
+
+  <div id="title">you are an idiot</div>
+
+  <div class="faces">
+
+    <!-- Smiley 1 -->
+    <svg viewBox="0 0 100 100">
+      <circle cx="50" cy="50" r="40"
+        fill="white" stroke="black" stroke-width="3"/>
+      <circle cx="37" cy="38" r="6" fill="black"/>
+      <circle cx="63" cy="38" r="6" fill="black"/>
+      <path d="M25 55 Q50 82 75 55"
+        fill="none" stroke="black"
+        stroke-width="4" stroke-linecap="round"/>
+    </svg>
+
+    <!-- Smiley 2 -->
+    <svg viewBox="0 0 100 100">
+      <circle cx="50" cy="50" r="40"
+        fill="white" stroke="black" stroke-width="3"/>
+      <circle cx="37" cy="38" r="6" fill="black"/>
+      <circle cx="63" cy="38" r="6" fill="black"/>
+      <path d="M25 55 Q50 82 75 55"
+        fill="none" stroke="black"
+        stroke-width="4" stroke-linecap="round"/>
+    </svg>
+
+    <!-- Smiley 3 -->
+    <svg viewBox="0 0 100 100">
+      <circle cx="50" cy="50" r="40"
+        fill="white" stroke="black" stroke-width="3"/>
+      <circle cx="37" cy="38" r="6" fill="black"/>
+      <circle cx="63" cy="38" r="6" fill="black"/>
+      <path d="M25 55 Q50 82 75 55"
+        fill="none" stroke="black"
+        stroke-width="4" stroke-linecap="round"/>
+    </svg>
+
+  </div>
+</div>
+
+<!-- DOWNLOAD NOTIFICATIONS -->
+<div id="downloads"></div>
+
+<!-- REVEAL -->
+<div id="reveal">
+  <h1>GET TROLLED.</h1>
+
+  <p><b>YOU ARE AN IDIOT HA-HA-HAHAHA</b></p>
+
+  <p>This is a fake virus, none of your information is being released.</p>
+
+  <p>You are safe, not being spied on.</p>
+</div>
+
+<!-- YOUR AUDIO FILE -->
+<audio id="song" preload="auto">
+  <source src="you-are-an-idiot.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+
+// ============================================
+// DOWNLOADABLE PRANK FILE
+// ============================================
+
+const prankFile = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GET TROLLED</title>
+
+<style>
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  background: white;
+  color: black;
+}
+
+h1 {
+  font-size: clamp(35px,8vw,80px);
+}
+
+p {
+  font-size: clamp(18px,4vw,30px);
+}
+</style>
+</head>
+
+<body>
+
 <h1>GET TROLLED.</h1>
-<p>YOU ARE AN IDIOT HA-HA-HAHAHA</p>
+
+<p><b>YOU ARE AN IDIOT HA-HA-HAHAHA</b></p>
+
 <p>This is a fake virus, none of your information is being released.</p>
+
 <p>You are safe, not being spied on.</p>
+
 </body>
 </html>`;
 
-let downloads = 0;
+// Download one real harmless HTML file
+function downloadPrankFile() {
 
-function downloadRealFile() {
-  if (downloads >= 5) return;
+  const blob = new Blob(
+    [prankFile],
+    { type: "text/html" }
+  );
 
-  downloads++;
-
-  const blob = new Blob([prankFile], {
-    type: "text/html"
-  });
+  const url = URL.createObjectURL(blob);
 
   const link = document.createElement("a");
-  link.href = URL.createObjectURL(blob);
-  link.download = `you-are-an-idiot-${downloads}.virus.html`;
+
+  link.href = url;
+  link.download = "you-are-an-idiot.virus.html";
 
   document.body.appendChild(link);
   link.click();
   link.remove();
 
-  setTimeout(() => URL.revokeObjectURL(link.href), 10000);
+  setTimeout(() => {
+    URL.revokeObjectURL(url);
+  }, 10000);
 }
 
-// Five genuine files, one per second
-const timer = setInterval(() => {
-  downloadRealFile();
 
-  if (downloads >= 5) {
-    clearInterval(timer);
+// ============================================
+// DOWNLOAD NOTIFICATIONS
+// ============================================
+
+const downloadArea = document.getElementById("downloads");
+
+let count = 0;
+let spamTimer = null;
+
+function showDownloadNotification() {
+
+  count++;
+
+  const notification = document.createElement("div");
+
+  notification.className = "download";
+
+  notification.textContent =
+    "⬇ you-are-an-idiot.virus";
+
+  downloadArea.prepend(notification);
+
+  // Keep only the newest few notifications
+  while (downloadArea.children.length > 6) {
+    downloadArea.lastChild.remove();
   }
-}, 1000);
+}
+
+
+// ============================================
+// START PRANK
+// ============================================
+
+const song = document.getElementById("song");
+
+let started = false;
+
+function startPrank() {
+
+  if (started) return;
+
+  started = true;
+
+  // Attempt to play music
+  song.play().catch(() => {
+
+    // Browser autoplay restrictions:
+    // first click anywhere starts playback
+    document.addEventListener("click", function() {
+
+      song.play().catch(() => {});
+
+    }, { once: true });
+
+  });
+
+  // Create a REAL downloadable HTML file
+  downloadPrankFile();
+
+  // Visual notifications while the song plays
+  spamTimer = setInterval(
+    showDownloadNotification,
+    150
+  );
+
+  // End when song ends
+  song.addEventListener("ended", finishPrank, {
+    once: true
+  });
+
+  // Fallback timeout if audio fails to load
+  setTimeout(finishPrank, 7000);
+}
+
+
+// ============================================
+// END PRANK
+// ============================================
+
+function finishPrank() {
+
+  if (spamTimer) {
+    clearInterval(spamTimer);
+    spamTimer = null;
+  }
+
+  document.getElementById("main").style.display = "none";
+
+  downloadArea.style.display = "none";
+
+  document.getElementById("reveal").style.display = "flex";
+}
+
+
+// ============================================
+// AUTOMATIC START
+// ============================================
+
+window.addEventListener("load", startPrank);
+
 </script>
+
+</body>
+</html>
