@@ -1,0 +1,60 @@
+<script>
+const prankFile = `<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>GET TROLLED</title>
+<style>
+body {
+  margin:0;
+  height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  text-align:center;
+  font-family:Arial,sans-serif;
+}
+h1 {font-size:55px}
+p {font-size:24px}
+</style>
+</head>
+<body>
+<h1>GET TROLLED.</h1>
+<p>YOU ARE AN IDIOT HA-HA-HAHAHA</p>
+<p>This is a fake virus, none of your information is being released.</p>
+<p>You are safe, not being spied on.</p>
+</body>
+</html>`;
+
+let downloads = 0;
+
+function downloadRealFile() {
+  if (downloads >= 5) return;
+
+  downloads++;
+
+  const blob = new Blob([prankFile], {
+    type: "text/html"
+  });
+
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = `you-are-an-idiot-${downloads}.virus.html`;
+
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+
+  setTimeout(() => URL.revokeObjectURL(link.href), 10000);
+}
+
+// Five genuine files, one per second
+const timer = setInterval(() => {
+  downloadRealFile();
+
+  if (downloads >= 5) {
+    clearInterval(timer);
+  }
+}, 1000);
+</script>
